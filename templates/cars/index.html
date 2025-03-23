@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная - CarRent{% endblock %}
+
+{% block content %}
+    <h2>Добро пожаловать в CarRent</h2>
+    <p>Бронируйте автомобили легко и быстро.</p>
+    <a href="{% url 'cars:list' %}" class="btn btn-success">Выбрать автомобиль</a>
+{% endblock %}
