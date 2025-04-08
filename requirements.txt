@@ -1,2 +1,4 @@
 Django>=5.1.7
 django-bootstrap5
+Pillow>=8.0.0
+

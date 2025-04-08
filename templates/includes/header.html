@@ -6,15 +6,30 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'cars:index' %}">Главная</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'cars:login' %}">Вход</a>
-            </li>
+           
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'cars:contact' %}">Контакты</a>
             </li>
+            
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:profile' %}">Мой профиль</a>
+                </li>
+                <li class="nav-item">
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link">Выход</button>
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:register' %}">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cars:login' %}">Вход</a>
+                </li>
+            {% endif %}
+        
         </ul>
     </div>
 </nav>
