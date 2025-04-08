@@ -5,11 +5,9 @@ from .views import home, car_list, contact, login_view  # Добавляем log
 app_name = 'cars'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-
-    path('register/', views.register, name='register'),
-    path('login/', views.login_view, name='login'),
+    path('', views.home, name='index'),
     path('contact/', views.contact, name='contact'),
-
-    path('cars/', car_list, name='list'),
+    path('login/', views.login_view, name='login'),
+    path('register/', views.register, name='register'),
+    path('cars/', views.car_list, name='list'),
 ]
