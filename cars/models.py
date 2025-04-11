@@ -3,6 +3,18 @@ from django.db import models
 
 
 class Car(models.Model):
+    # Возможные типы автомобилей
+    CAR_TYPE_CHOICES = [
+        ('sedan', 'Седан'),
+        ('suv', 'Внедорожник'),
+        ('coupe', 'Купе'),
+        ('hatchback', 'Хэтчбек'),
+        ('convertible', 'Кабриолет'),
+        ('van', 'Фургон'),
+        ('pickup', 'Пикап'),
+        ('sport', 'Спортивный'),
+    ]
+
     # Название автомобиля
     name = models.CharField(max_length=100)
 
@@ -12,8 +24,15 @@ class Car(models.Model):
     # Цена за аренду
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
 
-    # Тип автомобиля (например, седан, внедорожник, спортивный и т.д.)
-    car_type = models.CharField(max_length=50)
+    # Выбор из списка
+    car_type = models.CharField(
+        max_length=20,
+        choices=CAR_TYPE_CHOICES,
+        default='sedan'
+    )
+
+    # Год выпуска
+    year = models.PositiveIntegerField(default=2010)
 
     # Статус автомобиля (доступен ли для аренды)
     available = models.BooleanField(default=True)

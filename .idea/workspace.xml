@@ -4,21 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1b05e18-afea-4d8e-8ab6-bff193f1f5e3" name="Changes" comment="Создание базовой структуры сайта">
-      <change afterPath="$PROJECT_DIR$/templates/users/profile.html" afterDir="false" />
+    <list default="true" id="d1b05e18-afea-4d8e-8ab6-bff193f1f5e3" name="Changes" comment="Создание базовой структуры сайта. Добавление авторизации">
+      <change afterPath="$PROJECT_DIR$/static/js/car_list.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRental/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/CarRental/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarRental/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/CarRental/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cars/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cars/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cars/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/styles.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/includes/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/header.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cars/car_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cars/car_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/cars/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cars/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/includes/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/footer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Lib/site-packages/pip/_vendor/rich/logging.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Lib/site-packages/pip/_vendor/rich/logging.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,25 +52,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.CarRental.executor": "Run",
-    "Python.Rental.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "django.template.preview.state": "SHOW_EDITOR_AND_PREVIEW",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/razno/Documents/IT/CarRental/manage.py",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.CarRental.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Rental.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/razno/Documents/IT/CarRental/manage.py&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\razno\Documents\IT\CarRental\templates\cars" />
@@ -127,7 +127,11 @@
       <workItem from="1743676022846" duration="11000" />
       <workItem from="1743676315594" duration="38000" />
       <workItem from="1744099483097" duration="52000" />
-      <workItem from="1744099610731" duration="4251000" />
+      <workItem from="1744099610731" duration="4390000" />
+      <workItem from="1744274404676" duration="10000" />
+      <workItem from="1744275097939" duration="2000" />
+      <workItem from="1744275325806" duration="40000" />
+      <workItem from="1744372288769" duration="9111000" />
     </task>
     <task id="LOCAL-00001" summary="Создание базовой структуры сайта">
       <option name="closed" value="true" />
@@ -161,7 +165,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744102049201</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Создание базовой структуры сайта. Добавление авторизации">
+      <option name="closed" value="true" />
+      <created>1744103926495</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744103926497</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Создание базовой структуры сайта. Добавление авторизации">
+      <option name="closed" value="true" />
+      <created>1744103952754</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744103952754</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,9 +189,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Создание базовой структуры сайта" />
-    <option name="LAST_COMMIT_MESSAGE" value="Создание базовой структуры сайта" />
+    <MESSAGE value="Создание базовой структуры сайта. Добавление авторизации" />
+    <option name="LAST_COMMIT_MESSAGE" value="Создание базовой структуры сайта. Добавление авторизации" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CarRental$Rental.coverage" NAME="Rental Coverage Results" MODIFIED="1744102865248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/CarRental$Rental.coverage" NAME="Rental Coverage Results" MODIFIED="1744379858173" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
