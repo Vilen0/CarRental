@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Car, CarType
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from .models import Rental
+from .forms import RentalForm
+
 
 
 def contact(request):
@@ -74,4 +79,29 @@ def car_list(request):
         'car_types': car_types,
         'years': years,
         'selected_car_type': car_type,  # Передаем выбранный тип кузова в шаблон
+    })
+
+
+@login_required
+def rent_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+
+    if request.method == 'POST':
+        form = RentalForm(request.POST)
+        if form.is_valid():
+            rental = form.save(commit=False)
+            rental.user = request.user  # Присваиваем текущего пользователя
+            rental.car = car  # Присваиваем выбранный автомобиль
+            rental.save()
+            return redirect('profile')  # Перенаправляем на профиль после успешного бронирования
+    else:
+        form = RentalForm()
+
+    return render(request, 'cars/rent_car.html', {'car': car, 'form': form})
+
+@login_required
+def profile_view(request):
+    rentals = Rental.objects.filter(user=request.user).select_related('car')
+    return render(request, 'users/profile.html', {
+        'rentals': rentals
     })

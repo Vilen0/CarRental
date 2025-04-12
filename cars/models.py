@@ -1,5 +1,7 @@
 # cars/models.py
 from django.db import models
+from django.conf import settings
+
 
 class CarType(models.Model):
     key = models.CharField(max_length=50, unique=True)
@@ -13,7 +15,7 @@ class Car(models.Model):
     name = models.CharField(max_length=100)
 
     # Описание автомобиля
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     # Цена за аренду
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
@@ -35,3 +37,14 @@ class Car(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Rental(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    car = models.ForeignKey('Car', on_delete=models.CASCADE)
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.car.name} ({self.start_date} → {self.end_date})"

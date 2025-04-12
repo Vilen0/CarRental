@@ -78,45 +78,43 @@
 
 
     <div class="container mt-4">
-
-
         <div class="row">
             {% if cars %}
                 {% for car in cars %}
                     <div class="col-md-4 mb-4">
                         <div class="card h-100 shadow-sm">
                             {% if car.image %}
-                            <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}">
+                                <img src="{{ car.image.url }}" class="card-img-top" alt="{{ car.name }}">
                             {% else %}
-                            <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="Нет изображения">
+                                <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="Нет изображения">
                             {% endif %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ car.name }}</h5>
-
-                                <!-- Описание с ограничением на 100 символов -->
+                            
                                 <p class="card-text">
                                     <span class="short-description">{{ car.description|truncatechars:100 }}</span>
                                     <span class="full-description" style="display: none;">{{ car.description }}</span>
                                 </p>
-
-                                <!-- Кнопка "Показать целиком", показывается только если описание длиннее 100 символов -->
+                            
                                 {% if car.description|length > 100 %}
                                     <button class="btn btn-link show-more">Показать целиком</button>
                                 {% endif %}
-
-
-
-
-
+    
                                 <p><strong>Тип:</strong> {{ car.car_types.all|join:", " }}</p>
-
                                 <p><strong>Год:</strong> {{ car.year }}</p>
                                 <p><strong>Цена:</strong> {{ car.price_per_day }} ₽ / день</p>
                                 {% if car.available %}
-                                <span class="badge bg-success">Доступен</span>
+                                    <span class="badge bg-success">Доступен</span>
                                 {% else %}
-                                <span class="badge bg-secondary">Недоступен</span>
+                                    <span class="badge bg-secondary">Недоступен</span>
                                 {% endif %}
+                            
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'cars:rent_car' car.id %}" class="btn btn-success btn-sm mt-2">Арендовать</a>
+                                {% else %}
+                                    <p><a href="{% url 'cars:login' %}">Войдите</a>, чтобы арендовать</p>
+                                {% endif %}
+    
                             </div>
                         </div>
                     </div>
@@ -125,9 +123,13 @@
                 <p class="text-center mt-4">Автомобили не найдены по заданным параметрам.</p>
             {% endif %}
         </div>
-
+    
         {% block scripts %}
         <script src="{% static 'js/car_list.js' %}"></script>
         {% endblock %}
     </div>
+
+    
+    
+    
 {% endblock %}

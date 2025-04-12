@@ -99,23 +99,6 @@ label {
 
 
 
-
-/* Ограничиваем описание до 3 строк */
-.short-description {
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    line-height: 1.5em; /* Высота строки */
-    max-height: 4.5em;  /* 3 строки по 1.5em */
-    white-space: normal;
-}
-
-.full-description {
-    display: none;
-}
-
 .show-more {
     display: inline;
     color: #6c757d !important; /* Серый цвет текста */
@@ -134,7 +117,7 @@ label {
 }
 
 .card-text {
-    max-height: 4.5em; /* 3 строки по 1.5em */
+   /* max-height: 4.5em; /* 3 строки по 1.5em */
     overflow: hidden;
 }
 
@@ -142,4 +125,21 @@ label {
 .filter-form {
     max-width: 100% !important;
     margin: 0 !important;
+}
+
+
+.short-description {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-height: 50px; /* Ограничиваем высоту для сокращенного описания */
+}
+
+.full-description {
+    display: none;  /* Скрыто по умолчанию */
+    max-height: none; /* Убираем ограничение по высоте для полного описания */
+    overflow: visible; /* Полностью показываем содержимое */
+    transition: all 0.3s ease;  /* Плавное раскрытие */
 }

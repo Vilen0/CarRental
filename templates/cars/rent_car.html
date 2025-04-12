@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Аренда {{ car.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Аренда: {{ car.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                Пожалуйста, исправьте ошибки ниже.
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Арендовать</button>
+    </form>
+
+</div>
+{% endblock %}

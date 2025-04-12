@@ -4,14 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1b05e18-afea-4d8e-8ab6-bff193f1f5e3" name="Changes" comment="Доработка">
+    <list default="true" id="d1b05e18-afea-4d8e-8ab6-bff193f1f5e3" name="Changes" comment="Добавление автомобилей. Сортировка и фильтрация авто">
+      <change afterPath="$PROJECT_DIR$/templates/cars/rent_car.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/migrations/0002_car_year_alter_car_car_type.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/migrations/0003_alter_car_car_type.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cars/migrations/0004_cartype_remove_car_car_type_car_car_types.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cars/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cars/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cars/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/cars/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cars/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +135,7 @@
       <workItem from="1744275325806" duration="40000" />
       <workItem from="1744372288769" duration="9209000" />
       <workItem from="1744464414773" duration="3961000" />
-      <workItem from="1744469364225" duration="844000" />
+      <workItem from="1744469364225" duration="5721000" />
     </task>
     <task id="LOCAL-00001" summary="Создание базовой структуры сайта">
       <option name="closed" value="true" />
@@ -184,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744381462148</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Добавление автомобилей. Сортировка и фильтрация авто">
+      <option name="closed" value="true" />
+      <created>1744470939784</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744470939784</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,9 +211,10 @@
     <MESSAGE value="Создание базовой структуры сайта" />
     <MESSAGE value="Создание базовой структуры сайта. Добавление авторизации" />
     <MESSAGE value="Доработка" />
-    <option name="LAST_COMMIT_MESSAGE" value="Доработка" />
+    <MESSAGE value="Добавление автомобилей. Сортировка и фильтрация авто" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавление автомобилей. Сортировка и фильтрация авто" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/CarRental$Rental.coverage" NAME="Rental Coverage Results" MODIFIED="1744469380423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/CarRental$Rental.coverage" NAME="Rental Coverage Results" MODIFIED="1744475634434" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

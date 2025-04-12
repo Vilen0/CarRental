@@ -1,9 +1,30 @@
-<!-- profile.html -->
 {% extends 'base.html' %}
 
 {% block title %}Мой профиль{% endblock %}
 
 {% block content %}
 <h2>Привет, {{ user.username }}!</h2>
-<p>Здесь будет информация о вашем профиле.</p>
+
+{% if rentals %}
+    <h4 class="mt-4">Мои аренды:</h4>
+    <ul class="list-group">
+        {% for rental in rentals %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ rental.car.name }}</strong><br>
+                    <small>Дата аренды: {{ rental.start_date|date:"d.m.Y H:i" }}</small>
+                    {% if rental.end_date  %}
+                        <br><small>Возврат: {{ rental.end_date |date:"d.m.Y H:i" }}</small>
+                    {% endif %}
+                </div>
+                {% if rental.car.image %}
+                    <img src="{{ rental.car.image.url }}" alt="{{ rental.car.name }}" style="height: 50px;">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Вы пока не арендовали ни одного автомобиля.</p>
+{% endif %}
+
 {% endblock %}
