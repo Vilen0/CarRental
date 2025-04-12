@@ -5,22 +5,29 @@
 
 {% block content %}
 
-    <div class="text-center my-5">
+    <div class="text-center my-1">
         <h2>Добро пожаловать в CarRent</h2>
         <p>Бронируйте автомобили легко и быстро.</p>
     </div>
 
-    <div class="content container my-4">
+
+    <form method="get" class="row g-3 align-items-end filter-form">
         <form method="get" class="row g-3 align-items-end">
             <div class="col-12 col-sm-6 col-md-2">
                 <label for="car_type" class="form-label">Тип кузова</label>
                 <select name="car_type" class="form-select">
                     <option value="">Все</option>
                     {% for type in car_types %}
-                        <option value="{{ type }}" {% if request.GET.car_type == type %}selected{% endif %}>{{ type }}</option>
+                        <option value="{{ type.key }}"
+                            {% if type.key == request.GET.car_type %}selected{% endif %}>
+                            {{ type.name }}
+                        </option>
                     {% endfor %}
                 </select>
             </div>
+
+
+
     
             <div class="col-6 col-md-2">
                 <label for="year_from" class="form-label">Год от</label>
@@ -30,7 +37,7 @@
     
             <div class="col-6 col-md-2">
                 <label for="year_to" class="form-label">Год до</label>
-                <input type="number" name="year_to" class="form-control" min="1900" max="2100"
+                <input type="number" name="year_to" class="form-control" min="1950" max="2100"
                        value="{{ request.GET.year_to }}">
             </div>
     
@@ -47,8 +54,10 @@
                 <label for="sort" class="form-label">Сортировка</label>
                 <select name="sort" class="form-select">
                     <option value="">Без сортировки</option>
-                    <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>По цене</option>
-                    <option value="year" {% if request.GET.sort == 'year' %}selected{% endif %}>По году</option>
+                    <option value="price" {% if request.GET.sort == 'price' %}selected{% endif %}>По возрастанию цены</option>
+                    <option value="-price" {% if request.GET.sort == 'price' %}selected{% endif %}>По убыванию цены</option>
+                    <option value="year" {% if request.GET.sort == 'year' %}selected{% endif %}>Сначала старые</option>
+                    <option value="-year" {% if request.GET.sort == 'year' %}selected{% endif %}>Сначала новые</option>
                     <option value="car_type" {% if request.GET.sort == 'car_type' %}selected{% endif %}>По типу</option>
                 </select>
             </div>
@@ -57,7 +66,7 @@
                 <button type="submit" class="btn btn-primary w-100">Применить</button>
             </div>
         </form>
-    </div>
+    </form>
 
 
 
@@ -99,7 +108,8 @@
 
 
 
-                                <p><strong>Тип:</strong> {{ car.get_car_type_display }}</p>
+                                <p><strong>Тип:</strong> {{ car.car_types.all|join:", " }}</p>
+
                                 <p><strong>Год:</strong> {{ car.year }}</p>
                                 <p><strong>Цена:</strong> {{ car.price_per_day }} ₽ / день</p>
                                 {% if car.available %}

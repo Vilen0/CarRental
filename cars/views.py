@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Car
+from .models import Car, CarType
 
-def home(request):
-    return render(request, 'cars/index.html')
 
 def contact(request):
     return render(request, 'cars/contact.html')
@@ -30,14 +28,12 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-from django.shortcuts import render
-from .models import Car
 
 def car_list(request):
     cars = Car.objects.all()
 
-    # Получение параметров фильтра и сортировки из запроса
-    car_type = request.GET.get('car_type')
+    # Получение параметров фильтрации и сортировки из запроса
+    car_type = request.GET.get('car_type')  # Получаем выбранный тип кузова (или None)
     year_from = request.GET.get('year_from')
     year_to = request.GET.get('year_to')
     available = request.GET.get('available')
@@ -45,7 +41,9 @@ def car_list(request):
 
     # Применяем фильтры
     if car_type:
-        cars = cars.filter(car_type=car_type)
+        # Фильтруем по ключу типа кузова, если выбран тип
+        cars = cars.filter(car_types__key=car_type)
+
     if year_from:
         cars = cars.filter(year__gte=year_from)
     if year_to:
@@ -58,17 +56,22 @@ def car_list(request):
     # Применяем сортировку
     if sort == 'price':
         cars = cars.order_by('price_per_day')
+    elif sort == '-price':
+        cars = cars.order_by('-price_per_day')
     elif sort == 'year':
         cars = cars.order_by('year')
+    elif sort == '-year':
+        cars = cars.order_by('-year')
     elif sort == 'car_type':
-        cars = cars.order_by('car_type')
+        cars = cars.order_by('car_types__name')
 
     # Получение уникальных значений для фильтров
-    car_types = Car.objects.values_list('car_type', flat=True).distinct()
+    car_types = CarType.objects.all()
     years = Car.objects.values_list('year', flat=True).distinct().order_by('-year')
 
     return render(request, 'cars/index.html', {
         'cars': cars,
         'car_types': car_types,
         'years': years,
+        'selected_car_type': car_type,  # Передаем выбранный тип кузова в шаблон
     })
