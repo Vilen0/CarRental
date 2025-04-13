@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Аренда {{ car.name }}{% endblock %}
 
@@ -51,7 +52,19 @@
             </div>
         {% endif %}
 
+        <input type="hidden" id="pricePerDayValue" value="{{ car.price_per_day }}">
+
+        <!-- Вывод стоимости -->
+        <div class="mt-2">
+            <label>Общая стоимость:</label>
+            <input type="text" id="totalPrice" class="form-control" readonly>
+        </div>
+
+
         <button type="submit" class="btn btn-primary">Арендовать</button>
     </form>
+
+    <script src="{% static 'js/rental_cost.js' %}"></script>
+
 </div>
 {% endblock %}

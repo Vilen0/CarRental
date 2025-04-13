@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1b05e18-afea-4d8e-8ab6-bff193f1f5e3" name="Changes" comment="Доработка">
+    <list default="true" id="d1b05e18-afea-4d8e-8ab6-bff193f1f5e3" name="Changes" comment="Доработка. Добавление функционала аренды, продления.">
+      <change afterPath="$PROJECT_DIR$/static/js/rental_cost.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cars/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cars/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cars/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/cars/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/cars/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cars/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/cars/rent_car.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/cars/rent_car.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/includes/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/includes/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/users/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/users/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +132,7 @@
       <workItem from="1744464414773" duration="3961000" />
       <workItem from="1744469364225" duration="6420000" />
       <workItem from="1744525001108" duration="1342000" />
-      <workItem from="1744537348250" duration="12054000" />
+      <workItem from="1744537348250" duration="16065000" />
     </task>
     <task id="LOCAL-00001" summary="Создание базовой структуры сайта">
       <option name="closed" value="true" />
@@ -211,7 +214,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744542739168</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Доработка. Добавление функционала аренды, продления.">
+      <option name="closed" value="true" />
+      <created>1744559999851</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744559999851</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,7 +233,8 @@
     <MESSAGE value="Создание базовой структуры сайта. Добавление авторизации" />
     <MESSAGE value="Добавление автомобилей. Сортировка и фильтрация авто" />
     <MESSAGE value="Доработка" />
-    <option name="LAST_COMMIT_MESSAGE" value="Доработка" />
+    <MESSAGE value="Доработка. Добавление функционала аренды, продления." />
+    <option name="LAST_COMMIT_MESSAGE" value="Доработка. Добавление функционала аренды, продления." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CarRental$Rental.coverage" NAME="Rental Coverage Results" MODIFIED="1744559166942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />

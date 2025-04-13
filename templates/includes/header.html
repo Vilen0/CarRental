@@ -2,6 +2,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="{% url 'cars:index' %}">CarRental</a>
     <div class="collapse navbar-collapse" id="navbarNav">
+    
+    
+        {% if user.is_authenticated %}
+                <span class="nav-link text-success">
+                    Баланс: {{ user.balance }} ₽
+                </span>
+        {% endif %}
+    
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'cars:index' %}">Главная</a>
@@ -12,7 +20,7 @@
             </li>
             
             {% if user.is_authenticated %}
-            <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'users:profile' %}">Мой профиль</a>
                 </li>
                 <li class="nav-item">

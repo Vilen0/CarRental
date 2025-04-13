@@ -5,10 +5,31 @@
 {% block content %}
 <h2>Привет, {{ user.username }}!</h2>
 
+    <!-- Отображение баланса -->
+<div class="alert alert-info mt-3">
+    <strong>Ваш баланс:</strong> {{ user.balance }} ₽
+</div>
+
+<!-- Форма пополнения баланса -->
+<form method="post" action="{% url 'users:replenish_balance' %}" class="mb-4 d-flex align-items-center gap-2">
+    {% csrf_token %}
+    <input type="number" name="amount" min="1" class="form-control form-control-sm" style="width: 120px;" placeholder="Сумма" required>
+    <button type="submit" class="btn btn-sm btn-success">Пополнить</button>
+</form>
+
+    {% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
 {% if rentals %}
     <h4 class="mt-4">Мои аренды:</h4>
     <ul class="list-group">
-
         {% for rental in rentals %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
@@ -17,15 +38,7 @@
                     {% if rental.end_date %}
                         <br><small>Возврат: {{ rental.end_date|date:"d.m.Y" }}</small>
                     {% endif %}
-
-
-
-
-
-
-
-
-
+                
                     <!-- Кнопка Продлить -->
                     {% if rental.end_date and rental.end_date > today %}
                         <form method="post" action="{% url 'cars:extend_rental' rental.id %}" class="mt-2 d-flex align-items-center gap-2">

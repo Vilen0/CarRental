@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from cars.models import Rental
 from datetime import date
+from decimal import Decimal
 
 
 def register(request):
@@ -36,3 +37,18 @@ def profile(request):
     })
 
 
+@login_required
+def replenish_balance(request):
+    if request.method == 'POST':
+        try:
+            amount = Decimal(request.POST.get('amount', '0'))
+            if amount > 0:
+                request.user.balance += amount
+                request.user.save()
+                messages.success(request, f"Баланс пополнен на {amount} ₽.")
+            else:
+                messages.error(request, "Введите положительное число.")
+        except Exception as e:
+            messages.error(request, "Некорректная сумма.")
+
+    return redirect('users:profile')

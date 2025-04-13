@@ -11,6 +11,7 @@ from .forms import RentalForm
 from django.contrib import messages
 from django.db.models import Q, Count
 from django.utils import timezone
+from decimal import Decimal
 
 from datetime import timedelta, datetime
 
@@ -130,15 +131,11 @@ def car_list(request):
 def rent_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
-    # Проверяем, доступен ли автомобиль
     if car.status != 'Доступен' and car.unavailable_until:
-        # Если автомобиль недоступен, проверяем, если дата окончания доступности меньше сегодняшней даты
         if car.unavailable_until >= date.today():
-            # Если автомобиль все еще недоступен, выводим сообщение
             message = f"Этот автомобиль недоступен до {car.unavailable_until}."
             return render(request, 'cars/rent_car.html', {'car': car, 'message': message})
 
-    # Если автомобиль доступен, или дата окончания доступности прошла
     if request.method == 'POST':
         form = RentalForm(request.POST)
         if form.is_valid():
@@ -146,18 +143,38 @@ def rent_car(request, car_id):
             rental.car = car
             rental.user = request.user
 
-            # Обновляем статус автомобиля и устанавливаем дату, до которой он недоступен
-            car.status = 'Недоступен'
-            car.unavailable_until = rental.end_date  # Пример: аренда заканчивается в поле end_date формы
-            car.save()  # Сохраняем изменения в автомобиле
+            # Устанавливаем дату начала как сегодня, если она не указана
+            if not rental.start_date:
+                rental.start_date = date.today()
 
-            rental.save()  # Сохраняем аренду в базе данных
-            return redirect('users:profile')  # Перенаправление после успешной аренды
+            # Проверяем, что дата окончания позже даты начала
+            if rental.end_date <= rental.start_date:
+                form.add_error('end_date', 'Дата окончания аренды должна быть позже сегодняшнего дня.')
+                return render(request, 'cars/rent_car.html', {'car': car, 'form': form})
+
+            # Вычисляем стоимость и проверяем баланс
+            days = (rental.end_date - rental.start_date).days
+            total_price = days * car.price_per_day
+
+            if request.user.balance < total_price:
+                message = f"Недостаточно средств. Необходимо {total_price} ₽, у вас {request.user.balance} ₽."
+                return render(request, 'cars/rent_car.html', {'car': car, 'form': form, 'message': message})
+
+            # Списываем деньги
+            request.user.balance -= total_price
+            request.user.save()
+
+            # Обновляем автомобиль
+            car.status = 'Недоступен'
+            car.unavailable_until = rental.end_date
+            car.save()
+
+            rental.save()
+            return redirect('users:profile')
     else:
         form = RentalForm()
 
     return render(request, 'cars/rent_car.html', {'car': car, 'form': form})
-
 
 @login_required
 def extend_rental(request, rental_id):
@@ -168,15 +185,24 @@ def extend_rental(request, rental_id):
         try:
             extra_days = int(request.POST.get('extra_days', 0))
             if extra_days > 0 and rental.end_date:
-                rental.end_date += timedelta(days=extra_days)
-                rental.save()
+                total_price = extra_days * car.price_per_day
 
-                car.unavailable_until = rental.end_date
-                car.status = 'Недоступен'  # Обновляем статус на "Недоступен"
-                car.save()
+                if request.user.balance >= total_price:
+                    # Списываем средства
+                    request.user.balance -= total_price
+                    request.user.save()
 
+                    # Продлеваем аренду
+                    rental.end_date += timedelta(days=extra_days)
+                    rental.save()
 
-                messages.success(request, f"Аренда продлена на {extra_days} дней.")
+                    car.unavailable_until = rental.end_date
+                    car.status = 'Недоступен'
+                    car.save()
+
+                    messages.success(request, f"Аренда продлена на {extra_days} дней. Списано {total_price} ₽.")
+                else:
+                    messages.error(request, f"Недостаточно средств. Требуется {total_price} ₽, у вас {request.user.balance} ₽.")
             else:
                 messages.error(request, "Некорректное количество дней.")
         except ValueError:
