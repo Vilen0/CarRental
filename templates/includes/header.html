@@ -4,11 +4,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
     
     
+            
         {% if user.is_authenticated %}
+            {% if user.is_staff %}
+                <span class="nav-link text-success">
+                    Администратор
+                </span>
+            {% else %}
                 <span class="nav-link text-success">
                     Баланс: {{ user.balance }} ₽
                 </span>
+            {% endif %}
         {% endif %}
+
     
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">

@@ -209,3 +209,4 @@ def extend_rental(request, rental_id):
             messages.error(request, "Введите корректное число дней.")
 
     return redirect('users:profile')
+

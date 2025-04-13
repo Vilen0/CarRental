@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Управление пользователем{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Управление пользователем: {{ target_user.username }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="balance" class="form-label">Баланс пользователя</label>
+            <input type="number" step="0.01" class="form-control" id="balance" name="balance" value="{{ target_user.balance }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Обновить баланс</button>
+    </form>
+
+    {% if messages %}
+        <div class="mt-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <h4 class="mt-4">Аренды пользователя</h4>
+    {% if user_rentals %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Автомобиль</th>
+                    <th>Начало аренды</th>
+                    <th>Окончание аренды</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rental in user_rentals %}
+                <tr>
+                    <td>{{ rental.car.name }}</td>
+                    <td>{{ rental.start_date }}</td>
+                    <td>{{ rental.end_date }}</td>
+                    <td>
+                        {% if rental.end_date and rental.end_date < today %}
+                            <span class="badge bg-secondary">Завершена</span>
+                        {% else %}
+                            <span class="badge bg-success">Активна</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>У пользователя нет активных или завершённых аренд.</p>
+    {% endif %}
+
+
+    <!-- Кнопка для возврата на админ-панель -->
+    <div class="mt-3">
+        <a href="{% url 'users:profile' %}" class="btn btn-secondary">Вернуться к списку пользователей</a>
+    </div>
+</div>
+{% endblock %}
