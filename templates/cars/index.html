@@ -27,8 +27,6 @@
             </div>
 
 
-
-    
             <div class="col-6 col-md-2">
                 <label for="year_from" class="form-label">Год от</label>
                 <input type="number" name="year_from" class="form-control" min="1900" max="2100"
@@ -40,7 +38,14 @@
                 <input type="number" name="year_to" class="form-control" min="1950" max="2100"
                        value="{{ request.GET.year_to }}">
             </div>
-    
+        
+
+            <div class="col-6 col-md-3">
+                <label for="date_to" class="form-label">Доступен до</label>
+                <input type="date" name="date_to" class="form-control" value="{{ request.GET.date_to }}">
+            </div>
+
+
             <div class="col-12 col-sm-6 col-md-2">
                 <label for="available" class="form-label">Доступность</label>
                 <select name="available" class="form-select">
@@ -129,7 +134,4 @@
         {% endblock %}
     </div>
 
-    
-    
-    
 {% endblock %}

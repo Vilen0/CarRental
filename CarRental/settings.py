@@ -95,9 +95,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
+  #  {
+  #      'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+  #  },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
@@ -144,3 +144,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 LOGOUT_REDIRECT_URL = '/'  # Перенаправление на главную страницу после выхода
+
+

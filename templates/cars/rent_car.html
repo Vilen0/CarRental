@@ -4,17 +4,40 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Аренда: {{ car.name }}</h2>
+    <h2>Аренда автомобиля: {{ car.name }}</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Добавляем фото автомобиля -->
+            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <!-- Характеристики автомобиля -->
+            <h5>{{ car.description }}</h5>
+
+            <h4>Характеристики</h4>
+            <ul>
+                <li><strong>Тип кузова:</strong> {{ car.car_types.all|join:", " }}</li>
+                <li><strong>Год выпуска:</strong> {{ car.year }}</li>
+                <li><strong>Цена за день:</strong> {{ car.price_per_day }} ₽</li>
+            </ul>
+        </div>
+    </div>
+
+    <h4 class="mt-4">Оформление аренды</h4>
     <form method="post">
         {% csrf_token %}
+
+        <!-- Дополнительные поля для формы, например, дата начала и окончания аренды -->
         {{ form.as_p }}
+
         {% if form.errors %}
             <div class="alert alert-danger">
                 Пожалуйста, исправьте ошибки ниже.
             </div>
         {% endif %}
+
         <button type="submit" class="btn btn-primary">Арендовать</button>
     </form>
-
 </div>
 {% endblock %}

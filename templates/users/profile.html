@@ -8,19 +8,39 @@
 {% if rentals %}
     <h4 class="mt-4">Мои аренды:</h4>
     <ul class="list-group">
+
         {% for rental in rentals %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
                     <strong>{{ rental.car.name }}</strong><br>
-                    <small>Дата аренды: {{ rental.start_date|date:"d.m.Y H:i" }}</small>
-                    {% if rental.end_date  %}
-                        <br><small>Возврат: {{ rental.end_date |date:"d.m.Y H:i" }}</small>
+                    <small>Дата аренды: {{ rental.start_date|date:"d.m.Y" }}</small>
+                    {% if rental.end_date %}
+                        <br><small>Возврат: {{ rental.end_date|date:"d.m.Y" }}</small>
+                    {% endif %}
+
+
+
+
+
+
+
+
+
+                    <!-- Кнопка Продлить -->
+                    {% if rental.end_date and rental.end_date > today %}
+                        <form method="post" action="{% url 'cars:extend_rental' rental.id %}" class="mt-2 d-flex align-items-center gap-2">
+                            {% csrf_token %}
+                            <input type="number" name="extra_days" min="1" value="1" class="form-control form-control-sm" style="width: 80px;" required>
+                            <button type="submit" class="btn btn-sm btn-outline-primary">Продлить</button>
+                        </form>
                     {% endif %}
                 </div>
                 {% if rental.car.image %}
                     <img src="{{ rental.car.image.url }}" alt="{{ rental.car.name }}" style="height: 50px;">
                 {% endif %}
             </li>
+        {% empty %}
+            <p>У вас нет арендованных автомобилей.</p>
         {% endfor %}
     </ul>
 {% else %}
