@@ -7,6 +7,7 @@ class CarForm(forms.ModelForm):
         model = Car
         fields = ['name', 'description', 'price_per_day', 'car_types', 'available', 'image']
 
+
     def clean(self):
         cleaned_data = super().clean()
         name = cleaned_data.get("name")
@@ -23,8 +24,9 @@ class CarForm(forms.ModelForm):
 class RentalForm(forms.ModelForm):
     class Meta:
         model = Rental
-        fields = ['start_date', 'end_date']
+
+        fields = ['end_date']
         widgets = {
-            'start_date': forms.DateInput(attrs={'type': 'date'}),
+
             'end_date': forms.DateInput(attrs={'type': 'date'}),
         }

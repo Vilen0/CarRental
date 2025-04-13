@@ -32,13 +32,13 @@
                 <input type="number" name="year_from" class="form-control" min="1900" max="2100"
                        value="{{ request.GET.year_from }}">
             </div>
-    
+
             <div class="col-6 col-md-2">
                 <label for="year_to" class="form-label">Год до</label>
                 <input type="number" name="year_to" class="form-control" min="1950" max="2100"
                        value="{{ request.GET.year_to }}">
             </div>
-        
+
 
             <div class="col-6 col-md-3">
                 <label for="date_to" class="form-label">Доступен до</label>
@@ -49,7 +49,7 @@
             <div class="col-12 col-sm-6 col-md-2">
                 <label for="available" class="form-label">Доступность</label>
                 <select name="available" class="form-select">
-                    <option value="">Все</option>
+                    <option value="" {% if request.GET.available == '' %}selected{% endif %}>Все</option>
                     <option value="true" {% if request.GET.available == 'true' %}selected{% endif %}>Доступен</option>
                     <option value="false" {% if request.GET.available == 'false' %}selected{% endif %}>Недоступен</option>
                 </select>
@@ -108,14 +108,21 @@
                                 <p><strong>Тип:</strong> {{ car.car_types.all|join:", " }}</p>
                                 <p><strong>Год:</strong> {{ car.year }}</p>
                                 <p><strong>Цена:</strong> {{ car.price_per_day }} ₽ / день</p>
-                                {% if car.available %}
-                                    <span class="badge bg-success">Доступен</span>
+
+                                {% if car.status == 'Доступен' %}
+                                 <!--   <span class="badge bg-success">Доступен</span>   -->
                                 {% else %}
-                                    <span class="badge bg-secondary">Недоступен</span>
+                                    <span class="badge bg-secondary">
+                                        Недоступен{% if car.unavailable_until %} до {{ car.unavailable_until|date:"d.m.Y" }}{% endif %}
+                                    </span>
                                 {% endif %}
+
+
                             
-                                {% if user.is_authenticated %}
+                                {% if user.is_authenticated and car.status == 'Доступен' %}
                                     <a href="{% url 'cars:rent_car' car.id %}" class="btn btn-success btn-sm mt-2">Арендовать</a>
+                                {% elif user.is_authenticated and car.status != 'Доступен' %}
+                                    
                                 {% else %}
                                     <p><a href="{% url 'cars:login' %}">Войдите</a>, чтобы арендовать</p>
                                 {% endif %}

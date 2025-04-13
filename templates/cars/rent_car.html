@@ -20,6 +20,20 @@
                 <li><strong>Тип кузова:</strong> {{ car.car_types.all|join:", " }}</li>
                 <li><strong>Год выпуска:</strong> {{ car.year }}</li>
                 <li><strong>Цена за день:</strong> {{ car.price_per_day }} ₽</li>
+                
+                
+                <!-- Статус доступности -->
+                {% if car.status != 'Доступен' %}
+                    <li>
+                        <strong>Статус:</strong> 
+                        <span class="badge bg-secondary">Авто недоступно до {{ car.unavailable_until }}</span>
+                    </li>
+                {% else %}
+                    <li>
+                        <strong>Статус:</strong> 
+                        <span class="badge bg-success">Доступен</span>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

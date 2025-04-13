@@ -4,6 +4,12 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 
+
+STATUS_CHOICES = [
+    ('Доступен', 'Доступен'),
+    ('Недоступен', 'Недоступен'),
+]
+
 class CarType(models.Model):
     key = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=100)
@@ -36,8 +42,13 @@ class Car(models.Model):
     # Дата добавления автомобиля
     created_at = models.DateTimeField(auto_now_add=True)
 
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Доступен')
+    unavailable_until = models.DateField(null=True, blank=True)
+
     def __str__(self):
         return self.name
+
+
 
 
 class Rental(models.Model):
@@ -46,6 +57,7 @@ class Rental(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return f"{self.user.username} - {self.car.name} ({self.start_date} → {self.end_date})"

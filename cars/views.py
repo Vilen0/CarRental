@@ -9,6 +9,8 @@ from cars.models import Rental
 from .models import Rental
 from .forms import RentalForm
 from django.contrib import messages
+from django.db.models import Q, Count
+from django.utils import timezone
 
 from datetime import timedelta, datetime
 
@@ -51,7 +53,6 @@ def car_list(request):
 
     # Применяем фильтры
     if car_type:
-        # Фильтруем по ключу типа кузова, если выбран тип
         cars = cars.filter(car_types__key=car_type)
 
     if year_from:
@@ -59,17 +60,35 @@ def car_list(request):
     if year_to:
         cars = cars.filter(year__lte=year_to)
 
-    if available == 'true':
-        cars = cars.filter(available=True)
-    elif available == 'false':
-        cars = cars.filter(available=False)
+    today = timezone.now().date()
 
+    # Если параметр 'available' отсутствует в запросе, то принимаем его как 'all'
+    if available is None:
+        available = ''
+
+    # Фильтрация по доступности
+    if available == 'true':
+        cars = cars.exclude(Q(rental__end_date__gte=today) & Q(rental__end_date__isnull=False)).distinct()
+    elif available == 'false':
+        cars = cars.filter(Q(rental__end_date__gte=today) & Q(rental__end_date__isnull=False)).distinct()
+    elif available == 'all':
+        pass  # Отображаем все автомобили без фильтрации
+
+    # Собираем информацию о доступности каждого автомобиля
+    for car in cars:
+        active_rentals = car.rental_set.filter(end_date__gte=today)
+        if active_rentals.exists():
+            car.status = 'Недоступен'
+            car.unavailable_until = active_rentals.first().end_date
+        else:
+            car.status = 'Доступен'
+
+    # Обработка аренды по дате
     if date_to:
         try:
             date_to_dt = datetime.strptime(date_to, '%Y-%m-%d').date()
-            today = date.today()
 
-            # Находим машины, у которых есть пересекающиеся аренды
+            # Исключаем автомобили с пересекающимися арендами
             overlapping_rentals = Rental.objects.filter(
                 start_date__lte=date_to_dt,
                 end_date__gte=today
@@ -78,8 +97,7 @@ def car_list(request):
             cars = cars.exclude(id__in=overlapping_rentals)
 
         except ValueError:
-            pass  # Игнорируем ошибку даты, если пользователь ввёл что-то не то
-
+            pass  # Игнорируем ошибку, если дата неверна
 
     # Применяем сортировку
     if sort == 'price':
@@ -102,6 +120,9 @@ def car_list(request):
         'car_types': car_types,
         'years': years,
         'selected_car_type': car_type,  # Передаем выбранный тип кузова в шаблон
+        'available': available,  # Передаем параметр доступности в шаблон
+        'today': today,  # Передаем текущую дату в шаблон
+  # Передаем информацию о доступности
     })
 
 
@@ -109,24 +130,39 @@ def car_list(request):
 def rent_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
 
+    # Проверяем, доступен ли автомобиль
+    if car.status != 'Доступен' and car.unavailable_until:
+        # Если автомобиль недоступен, проверяем, если дата окончания доступности меньше сегодняшней даты
+        if car.unavailable_until >= date.today():
+            # Если автомобиль все еще недоступен, выводим сообщение
+            message = f"Этот автомобиль недоступен до {car.unavailable_until}."
+            return render(request, 'cars/rent_car.html', {'car': car, 'message': message})
+
+    # Если автомобиль доступен, или дата окончания доступности прошла
     if request.method == 'POST':
         form = RentalForm(request.POST)
         if form.is_valid():
             rental = form.save(commit=False)
-            rental.user = request.user  # Присваиваем текущего пользователя
-            rental.car = car  # Присваиваем выбранный автомобиль
-            rental.save()
-            return redirect('users:profile')  # Перенаправляем на профиль после успешного бронирования
+            rental.car = car
+            rental.user = request.user
+
+            # Обновляем статус автомобиля и устанавливаем дату, до которой он недоступен
+            car.status = 'Недоступен'
+            car.unavailable_until = rental.end_date  # Пример: аренда заканчивается в поле end_date формы
+            car.save()  # Сохраняем изменения в автомобиле
+
+            rental.save()  # Сохраняем аренду в базе данных
+            return redirect('users:profile')  # Перенаправление после успешной аренды
     else:
         form = RentalForm()
 
     return render(request, 'cars/rent_car.html', {'car': car, 'form': form})
 
 
-
 @login_required
 def extend_rental(request, rental_id):
     rental = get_object_or_404(Rental, id=rental_id, user=request.user)
+    car = rental.car
 
     if request.method == 'POST':
         try:
@@ -134,6 +170,12 @@ def extend_rental(request, rental_id):
             if extra_days > 0 and rental.end_date:
                 rental.end_date += timedelta(days=extra_days)
                 rental.save()
+
+                car.unavailable_until = rental.end_date
+                car.status = 'Недоступен'  # Обновляем статус на "Недоступен"
+                car.save()
+
+
                 messages.success(request, f"Аренда продлена на {extra_days} дней.")
             else:
                 messages.error(request, "Некорректное количество дней.")
