@@ -18,24 +18,21 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Вход пользователя после регистрации
+            login(request, user)
             messages.success(request, 'Аккаунт успешно создан! Вы можете войти в систему.')
-            return redirect('cars:index')  # Убедитесь, что у вас есть URL с именем 'cars:index'
+            return redirect('cars:index')
         else:
             messages.error(request, 'Пожалуйста, исправьте ошибки в форме.')
     else:
         form = CustomUserCreationForm()
-
     return render(request, 'register.html', {'form': form})
-
 
 
 @login_required
 def profile(request):
-    if request.user.is_staff:  # или request.user.is_superuser
-        users = CustomUser.objects.exclude(id=request.user.id)  # все, кроме самого себя
+    if request.user.is_staff:
+        users = CustomUser.objects.exclude(id=request.user.id)
         return render(request, 'users/admin_profile.html', {'users': users})
-
     rentals = Rental.objects.filter(user=request.user)
     today = date.today()  # ← это важная строка
 

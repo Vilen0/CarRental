@@ -40,6 +40,14 @@
     </div>
 
     <h4 class="mt-4">Оформление аренды</h4>
+
+    {% if message %}
+        <div class="alert alert-warning mt-3">
+            {{ message }}
+        </div>
+    {% endif %}
+
+
     <form method="post">
         {% csrf_token %}
 

@@ -3,7 +3,47 @@
 {% block title %}Контакты - CarRent{% endblock %}
 
 {% block content %}
-    <h2>Контакты</h2>
-    <p>Свяжитесь с нами по телефону: +7 (900) 123-45-67</p>
-    <p>Email: support@carrent.com</p>
+<div class="container mt-5">
+    <h2 class="mb-4">Свяжитесь с нами</h2>
+
+    <div class="row">
+        <!-- Контактная информация -->
+        <div class="col-md-6">
+            <h5>Контактная информация</h5>
+            <p><strong>Телефон:</strong> +7 (900) 123-45-67</p>
+            <p><strong>Email:</strong> support@carrent.com</p>
+            <p><strong>Адрес:</strong> г. Ставрополь, Пр. Кулакова, д. 2</p>
+        </div>
+
+        <!-- Форма обратной связи -->
+        <div class="col-md-6">
+            <h5>Форма обратной связи</h5>
+            <form>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Ваше имя</label>
+                    <input type="text" class="form-control" id="name" placeholder="Иван Иванов">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Сообщение</label>
+                    <textarea class="form-control" id="message" rows="4" placeholder="Ваше сообщение..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Карта -->
+    <div class="mt-5">
+        <h5>Мы на карте</h5>
+        <div class="ratio ratio-16x9">
+            <iframe
+                src="https://yandex.ru/map-widget/v1/?um=constructor%3Ac0e4ff5e16930ce72f794abad0bd876b044861d015e4da6f5c444eb5f545283b&amp;source=constructor"
+                width="100%" height="400" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
 {% endblock %}

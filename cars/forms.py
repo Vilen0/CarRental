@@ -26,7 +26,9 @@ class RentalForm(forms.ModelForm):
         model = Rental
 
         fields = ['end_date']
+        labels = {
+            'end_date': 'Дата окончания аренды',
+        }
         widgets = {
-
             'end_date': forms.DateInput(attrs={'type': 'date'}),
         }

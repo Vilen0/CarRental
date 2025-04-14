@@ -10,13 +10,13 @@
     <strong>Ваш баланс:</strong> {{ user.balance }} ₽
 </div>
 
-<!-- Форма пополнения баланса -->
+<!-- Форма пополнения баланса 
 <form method="post" action="{% url 'users:replenish_balance' %}" class="mb-4 d-flex align-items-center gap-2">
     {% csrf_token %}
     <input type="number" name="amount" min="1" class="form-control form-control-sm" style="width: 120px;" placeholder="Сумма" required>
     <button type="submit" class="btn btn-sm btn-success">Пополнить</button>
 </form>
-
+-->
     {% if messages %}
 <div class="container mt-3">
     {% for message in messages %}
